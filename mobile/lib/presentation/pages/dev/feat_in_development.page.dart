@@ -96,6 +96,11 @@ final _features = [
     icon: Icons.timeline_rounded,
     onTap: (ctx, _) => ctx.pushRoute(const TabShellRoute()),
   ),
+  _Feature(
+    name: 'People',
+    icon: Icons.people_outline_rounded,
+    onTap: (ctx, _) => ctx.pushRoute(const DriftPeopleRoute()),
+  ),
 ];
 
 @RoutePage()
