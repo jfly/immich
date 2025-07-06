@@ -173,6 +173,14 @@ class SyncStreamService {
           data.cast(),
           debugLabel: 'partner',
         );
+      // case SyncEntityType.personV1:
+      //   return _syncStreamRepository.updatePeopleV1(data.cast());
+      // case SyncEntityType.personDeleteV1:
+      //   return _syncStreamRepository.deletePeopleV1(data.cast());
+      // case SyncEntityType.faceV1:
+      //   return _syncStreamRepository.updateFacesV1(data.cast());
+      // case SyncEntityType.faceDeleteV1:
+      //   return _syncStreamRepository.deleteFacesV1(data.cast());
       default:
         _logger.warning("Unknown sync data type: $type");
     }

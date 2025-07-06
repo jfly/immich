@@ -56,6 +56,8 @@ class SyncApiRepository {
           SyncRequestType.memoryToAssetsV1,
           SyncRequestType.stacksV1,
           SyncRequestType.partnerStacksV1,
+          SyncRequestType.peopleV1,
+          SyncRequestType.facesV1,
         ],
       ).toJson(),
     );
@@ -160,7 +162,6 @@ const _kResponseMap = <SyncEntityType, Function(Object)>{
   SyncEntityType.albumToAssetV1: SyncAlbumToAssetV1.fromJson,
   SyncEntityType.albumToAssetBackfillV1: SyncAlbumToAssetV1.fromJson,
   SyncEntityType.albumToAssetDeleteV1: SyncAlbumToAssetDeleteV1.fromJson,
-  SyncEntityType.syncAckV1: _SyncAckV1.fromJson,
   SyncEntityType.memoryV1: SyncMemoryV1.fromJson,
   SyncEntityType.memoryDeleteV1: SyncMemoryDeleteV1.fromJson,
   SyncEntityType.memoryToAssetV1: SyncMemoryAssetV1.fromJson,
@@ -170,6 +171,11 @@ const _kResponseMap = <SyncEntityType, Function(Object)>{
   SyncEntityType.partnerStackV1: SyncStackV1.fromJson,
   SyncEntityType.partnerStackBackfillV1: SyncStackV1.fromJson,
   SyncEntityType.partnerStackDeleteV1: SyncStackDeleteV1.fromJson,
+  SyncEntityType.personV1: SyncPersonV1.fromJson,
+  SyncEntityType.personDeleteV1: SyncPersonDeleteV1.fromJson,
+  SyncEntityType.faceV1: SyncFaceV1.fromJson,
+  SyncEntityType.faceDeleteV1: SyncFaceDeleteV1.fromJson,
+  SyncEntityType.syncAckV1: _SyncAckV1.fromJson,
 };
 
 class _SyncAckV1 {

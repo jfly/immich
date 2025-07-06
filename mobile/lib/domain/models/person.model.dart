@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-class Person {
-  const Person({
+// TODO: Remove PersonDto once Isar is removed
+class PersonDto {
+  const PersonDto({
     required this.id,
     this.birthDate,
     required this.isHidden,
@@ -22,7 +23,7 @@ class Person {
     return 'Person(id: $id, birthDate: $birthDate, isHidden: $isHidden, name: $name, thumbnailPath: $thumbnailPath, updatedAt: $updatedAt)';
   }
 
-  Person copyWith({
+  PersonDto copyWith({
     String? id,
     DateTime? birthDate,
     bool? isHidden,
@@ -30,7 +31,7 @@ class Person {
     String? thumbnailPath,
     DateTime? updatedAt,
   }) {
-    return Person(
+    return PersonDto(
       id: id ?? this.id,
       birthDate: birthDate ?? this.birthDate,
       isHidden: isHidden ?? this.isHidden,
@@ -51,8 +52,8 @@ class Person {
     };
   }
 
-  factory Person.fromMap(Map<String, dynamic> map) {
-    return Person(
+  factory PersonDto.fromMap(Map<String, dynamic> map) {
+    return PersonDto(
       id: map['id'] as String,
       birthDate: map['birthDate'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['birthDate'] as int)
@@ -68,11 +69,11 @@ class Person {
 
   String toJson() => json.encode(toMap());
 
-  factory Person.fromJson(String source) =>
-      Person.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PersonDto.fromJson(String source) =>
+      PersonDto.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  bool operator ==(covariant Person other) {
+  bool operator ==(covariant PersonDto other) {
     if (identical(this, other)) return true;
 
     return other.id == id &&
@@ -91,5 +92,62 @@ class Person {
         name.hashCode ^
         thumbnailPath.hashCode ^
         updatedAt.hashCode;
+  }
+}
+
+// Model for a person stored in the server
+class Person {
+  final String id;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final String ownerId;
+  final String name;
+  final String? thumbnailPath;
+  final bool isHidden;
+  final DateTime? birthDate;
+  final String? faceAssetId;
+  final bool isFavorite;
+  final String? color;
+
+  const Person({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.ownerId,
+    required this.name,
+    this.thumbnailPath,
+    required this.isHidden,
+    this.birthDate,
+    this.faceAssetId,
+    required this.isFavorite,
+    this.color,
+  });
+
+  Person copyWith({
+    String? id,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? ownerId,
+    String? name,
+    String? thumbnailPath,
+    bool? isHidden,
+    DateTime? birthDate,
+    String? faceAssetId,
+    bool? isFavorite,
+    String? color,
+  }) {
+    return Person(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      ownerId: ownerId ?? this.ownerId,
+      name: name ?? this.name,
+      thumbnailPath: thumbnailPath ?? this.thumbnailPath,
+      isHidden: isHidden ?? this.isHidden,
+      birthDate: birthDate ?? this.birthDate,
+      faceAssetId: faceAssetId ?? this.faceAssetId,
+      isFavorite: isFavorite ?? this.isFavorite,
+      color: color ?? this.color,
+    );
   }
 }

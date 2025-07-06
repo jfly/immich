@@ -101,6 +101,14 @@ void main() {
         debugLabel: any(named: 'debugLabel'),
       ),
     ).thenAnswer(successHandler);
+    // when(() => mockSyncStreamRepo.updatePeopleV1(any()))
+    //     .thenAnswer(successHandler);
+    // when(() => mockSyncStreamRepo.deletePeopleV1(any()))
+    //     .thenAnswer(successHandler);
+    // when(() => mockSyncStreamRepo.updateFacesV1(any()))
+    //     .thenAnswer(successHandler);
+    // when(() => mockSyncStreamRepo.deleteFacesV1(any()))
+    //     .thenAnswer(successHandler);
 
     sut = SyncStreamService(
       syncApiRepository: mockSyncApiRepo,
