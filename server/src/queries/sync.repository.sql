@@ -403,6 +403,62 @@ where
 order by
   "updateId" asc
 
+-- SyncRepository.face.getDeletes
+select
+  "id",
+  "faceId"
+from
+  "asset_faces_audit"
+where
+  "faceId" in (
+    select
+      "id"
+    from
+      "asset_faces"
+    where
+      "assetId" in (
+        select
+          "id"
+        from
+          "assets"
+        where
+          "ownerId" = $1
+      )
+  )
+  and "deletedAt" < now() - interval '1 millisecond'
+order by
+  "id" asc
+
+-- SyncRepository.face.getUpserts
+select
+  "id",
+  "personId",
+  "assetId",
+  "imageHeight",
+  "imageWidth",
+  "boundingBoxX1",
+  "boundingBoxY1",
+  "boundingBoxX2",
+  "boundingBoxY2",
+  "sourceType",
+  "createdAt",
+  "updatedAt",
+  "deletedAt",
+  "updateId"
+from
+  "asset_faces"
+where
+  "assetId" in (
+    select
+    from
+      "assets"
+    where
+      "ownerId" = $1
+  )
+  and "updatedAt" < now() - interval '1 millisecond'
+order by
+  "updateId" asc
+
 -- SyncRepository.memory.getDeletes
 select
   "id",
@@ -745,6 +801,40 @@ where
     where
       "sharedWithId" = $1
   )
+  and "updatedAt" < now() - interval '1 millisecond'
+order by
+  "updateId" asc
+
+-- SyncRepository.person.getDeletes
+select
+  "id",
+  "personId"
+from
+  "people_audit"
+where
+  "userId" = $1
+  and "deletedAt" < now() - interval '1 millisecond'
+order by
+  "id" asc
+
+-- SyncRepository.person.getUpserts
+select
+  "id",
+  "createdAt",
+  "updatedAt",
+  "ownerId",
+  "name",
+  "thumbnailPath",
+  "isHidden",
+  "birthDate",
+  "faceAssetId",
+  "isFavorite",
+  "color",
+  "updateId"
+from
+  "person"
+where
+  "ownerId" = $1
   and "updatedAt" < now() - interval '1 millisecond'
 order by
   "updateId" asc

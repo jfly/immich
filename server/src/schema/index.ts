@@ -3,6 +3,7 @@ import {
   album_user_after_insert,
   album_users_delete_audit,
   albums_delete_audit,
+  asset_faces_delete_audit,
   assets_delete_audit,
   f_concat_ws,
   f_unaccent,
@@ -11,6 +12,7 @@ import {
   memories_delete_audit,
   memory_assets_delete_audit,
   partners_delete_audit,
+  people_delete_audit,
   stacks_delete_audit,
   updated_at,
   users_delete_audit,
@@ -24,6 +26,7 @@ import { AlbumUserTable } from 'src/schema/tables/album-user.table';
 import { AlbumTable } from 'src/schema/tables/album.table';
 import { ApiKeyTable } from 'src/schema/tables/api-key.table';
 import { AssetAuditTable } from 'src/schema/tables/asset-audit.table';
+import { AssetFaceAuditTable } from 'src/schema/tables/asset-face-audit.table';
 import { AssetFaceTable } from 'src/schema/tables/asset-face.table';
 import { AssetFileTable } from 'src/schema/tables/asset-files.table';
 import { AssetJobStatusTable } from 'src/schema/tables/asset-job-status.table';
@@ -42,6 +45,7 @@ import { NaturalEarthCountriesTable } from 'src/schema/tables/natural-earth-coun
 import { NotificationTable } from 'src/schema/tables/notification.table';
 import { PartnerAuditTable } from 'src/schema/tables/partner-audit.table';
 import { PartnerTable } from 'src/schema/tables/partner.table';
+import { PersonAuditTable } from 'src/schema/tables/person-audit.table';
 import { PersonTable } from 'src/schema/tables/person.table';
 import { SessionTable } from 'src/schema/tables/session.table';
 import { SharedLinkAssetTable } from 'src/schema/tables/shared-link-asset.table';
@@ -73,6 +77,7 @@ export class ImmichDatabase {
     AlbumTable,
     ApiKeyTable,
     AssetAuditTable,
+    AssetFaceAuditTable,
     AssetFaceTable,
     AssetJobStatusTable,
     AssetTable,
@@ -91,6 +96,7 @@ export class ImmichDatabase {
     NotificationTable,
     PartnerAuditTable,
     PartnerTable,
+    PersonAuditTable,
     PersonTable,
     SessionTable,
     SharedLinkAssetTable,
@@ -124,6 +130,8 @@ export class ImmichDatabase {
     memories_delete_audit,
     memory_assets_delete_audit,
     stacks_delete_audit,
+    people_delete_audit,
+    asset_faces_delete_audit,
   ];
 
   enum = [assets_status_enum, asset_face_source_type, asset_visibility_enum];
@@ -145,6 +153,7 @@ export interface DB {
   album_users_audit: AlbumUserAuditTable;
   api_keys: ApiKeyTable;
   asset_faces: AssetFaceTable;
+  asset_faces_audit: AssetFaceAuditTable;
   asset_files: AssetFileTable;
   asset_job_status: AssetJobStatusTable;
   asset_stack: StackTable;
@@ -166,6 +175,7 @@ export interface DB {
   partners_audit: PartnerAuditTable;
   partners: PartnerTable;
   person: PersonTable;
+  people_audit: PersonAuditTable;
   sessions: SessionTable;
   session_sync_checkpoints: SessionSyncCheckpointTable;
   shared_link__asset: SharedLinkAssetTable;

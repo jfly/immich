@@ -13830,9 +13830,92 @@
           "MemoryToAssetDeleteV1",
           "StackV1",
           "StackDeleteV1",
+          "PersonV1",
+          "PersonDeleteV1",
+          "FaceV1",
+          "FaceDeleteV1",
           "SyncAckV1"
         ],
         "type": "string"
+      },
+      "SyncFaceDeleteV1": {
+        "properties": {
+          "faceId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "faceId"
+        ],
+        "type": "object"
+      },
+      "SyncFaceV1": {
+        "properties": {
+          "assetId": {
+            "type": "string"
+          },
+          "boundingBoxX1": {
+            "type": "integer"
+          },
+          "boundingBoxX2": {
+            "type": "integer"
+          },
+          "boundingBoxY1": {
+            "type": "integer"
+          },
+          "boundingBoxY2": {
+            "type": "integer"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "deletedAt": {
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "imageHeight": {
+            "type": "integer"
+          },
+          "imageWidth": {
+            "type": "integer"
+          },
+          "personId": {
+            "nullable": true,
+            "type": "string"
+          },
+          "sourceType": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SourceType"
+              }
+            ]
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "assetId",
+          "boundingBoxX1",
+          "boundingBoxX2",
+          "boundingBoxY1",
+          "boundingBoxY2",
+          "createdAt",
+          "deletedAt",
+          "id",
+          "imageHeight",
+          "imageWidth",
+          "personId",
+          "sourceType",
+          "updatedAt"
+        ],
+        "type": "object"
       },
       "SyncMemoryAssetDeleteV1": {
         "properties": {
@@ -13979,6 +14062,74 @@
         ],
         "type": "object"
       },
+      "SyncPersonDeleteV1": {
+        "properties": {
+          "personId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "personId"
+        ],
+        "type": "object"
+      },
+      "SyncPersonV1": {
+        "properties": {
+          "birthDate": {
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "color": {
+            "nullable": true,
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "faceAssetId": {
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          },
+          "isHidden": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "thumbnailPath": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "birthDate",
+          "color",
+          "createdAt",
+          "faceAssetId",
+          "id",
+          "isFavorite",
+          "isHidden",
+          "name",
+          "ownerId",
+          "thumbnailPath",
+          "updatedAt"
+        ],
+        "type": "object"
+      },
       "SyncRequestType": {
         "enum": [
           "AlbumsV1",
@@ -13994,6 +14145,8 @@
           "PartnerAssetsV1",
           "PartnerAssetExifsV1",
           "PartnerStacksV1",
+          "PeopleV1",
+          "FacesV1",
           "StacksV1",
           "UsersV1"
         ],

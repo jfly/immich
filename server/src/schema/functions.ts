@@ -218,3 +218,30 @@ export const stacks_delete_audit = registerFunction({
     END`,
   synchronize: false,
 });
+
+export const people_delete_audit = registerFunction({
+  name: 'people_delete_audit',
+  returnType: 'TRIGGER',
+  language: 'PLPGSQL',
+  body: `
+    BEGIN
+      INSERT INTO people_audit ("personId", "userId")
+      SELECT "id", "ownerId"
+      FROM OLD;
+      RETURN NULL;
+    END`,
+  synchronize: false,
+});
+
+export const asset_faces_delete_audit = registerFunction({
+  name: 'asset_faces_delete_audit',
+  returnType: 'TRIGGER',
+  language: 'PLPGSQL',
+  body: `
+    BEGIN
+      INSERT INTO asset_faces_audit ("faceId")
+      SELECT "id" FROM OLD;
+      RETURN NULL;
+    END`,
+  synchronize: false,
+});

@@ -572,6 +572,10 @@ class ApiClient {
           return SyncAssetV1.fromJson(value);
         case 'SyncEntityType':
           return SyncEntityTypeTypeTransformer().decode(value);
+        case 'SyncFaceDeleteV1':
+          return SyncFaceDeleteV1.fromJson(value);
+        case 'SyncFaceV1':
+          return SyncFaceV1.fromJson(value);
         case 'SyncMemoryAssetDeleteV1':
           return SyncMemoryAssetDeleteV1.fromJson(value);
         case 'SyncMemoryAssetV1':
@@ -584,6 +588,10 @@ class ApiClient {
           return SyncPartnerDeleteV1.fromJson(value);
         case 'SyncPartnerV1':
           return SyncPartnerV1.fromJson(value);
+        case 'SyncPersonDeleteV1':
+          return SyncPersonDeleteV1.fromJson(value);
+        case 'SyncPersonV1':
+          return SyncPersonV1.fromJson(value);
         case 'SyncRequestType':
           return SyncRequestTypeTypeTransformer().decode(value);
         case 'SyncStackDeleteV1':

@@ -8,6 +8,7 @@ import {
   AssetType,
   AssetVisibility,
   MemoryType,
+  SourceType,
   SyncEntityType,
   SyncRequestType,
 } from 'src/enum';
@@ -234,6 +235,55 @@ export class SyncStackDeleteV1 {
 }
 
 @ExtraModel()
+export class SyncPersonV1 {
+  id!: string;
+  createdAt!: Date;
+  updatedAt!: Date;
+  ownerId!: string;
+  name!: string;
+  thumbnailPath!: string;
+  isHidden!: boolean;
+  birthDate!: Date | null;
+  faceAssetId!: string | null;
+  isFavorite!: boolean;
+  color!: string | null;
+}
+
+@ExtraModel()
+export class SyncPersonDeleteV1 {
+  personId!: string;
+}
+
+@ExtraModel()
+export class SyncFaceV1 {
+  id!: string;
+  personId!: string | null;
+  assetId!: string;
+  @ApiProperty({ type: 'integer' })
+  imageHeight!: number;
+  @ApiProperty({ type: 'integer' })
+  imageWidth!: number;
+  @ApiProperty({ type: 'integer' })
+  boundingBoxX1!: number;
+  @ApiProperty({ type: 'integer' })
+  boundingBoxY1!: number;
+  @ApiProperty({ type: 'integer' })
+  boundingBoxX2!: number;
+  @ApiProperty({ type: 'integer' })
+  boundingBoxY2!: number;
+  @ApiProperty({ enumName: 'SourceType', enum: SourceType })
+  sourceType!: SourceType;
+  createdAt!: Date;
+  updatedAt!: Date;
+  deletedAt!: Date | null;
+}
+
+@ExtraModel()
+export class SyncFaceDeleteV1 {
+  faceId!: string;
+}
+
+@ExtraModel()
 export class SyncAckV1 {}
 
 export type SyncItem = {
@@ -270,6 +320,10 @@ export type SyncItem = {
   [SyncEntityType.PartnerStackBackfillV1]: SyncStackV1;
   [SyncEntityType.PartnerStackDeleteV1]: SyncStackDeleteV1;
   [SyncEntityType.PartnerStackV1]: SyncStackV1;
+  [SyncEntityType.PersonV1]: SyncPersonV1;
+  [SyncEntityType.PersonDeleteV1]: SyncPersonDeleteV1;
+  [SyncEntityType.FaceV1]: SyncFaceV1;
+  [SyncEntityType.FaceDeleteV1]: SyncFaceDeleteV1;
   [SyncEntityType.SyncAckV1]: SyncAckV1;
 };
 

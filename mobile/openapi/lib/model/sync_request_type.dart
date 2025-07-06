@@ -36,6 +36,8 @@ class SyncRequestType {
   static const partnerAssetsV1 = SyncRequestType._(r'PartnerAssetsV1');
   static const partnerAssetExifsV1 = SyncRequestType._(r'PartnerAssetExifsV1');
   static const partnerStacksV1 = SyncRequestType._(r'PartnerStacksV1');
+  static const peopleV1 = SyncRequestType._(r'PeopleV1');
+  static const facesV1 = SyncRequestType._(r'FacesV1');
   static const stacksV1 = SyncRequestType._(r'StacksV1');
   static const usersV1 = SyncRequestType._(r'UsersV1');
 
@@ -54,6 +56,8 @@ class SyncRequestType {
     partnerAssetsV1,
     partnerAssetExifsV1,
     partnerStacksV1,
+    peopleV1,
+    facesV1,
     stacksV1,
     usersV1,
   ];
@@ -107,6 +111,8 @@ class SyncRequestTypeTypeTransformer {
         case r'PartnerAssetsV1': return SyncRequestType.partnerAssetsV1;
         case r'PartnerAssetExifsV1': return SyncRequestType.partnerAssetExifsV1;
         case r'PartnerStacksV1': return SyncRequestType.partnerStacksV1;
+        case r'PeopleV1': return SyncRequestType.peopleV1;
+        case r'FacesV1': return SyncRequestType.facesV1;
         case r'StacksV1': return SyncRequestType.stacksV1;
         case r'UsersV1': return SyncRequestType.usersV1;
         default:

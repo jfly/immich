@@ -15,6 +15,8 @@ type AuditTables =
   | 'album_assets_audit'
   | 'memories_audit'
   | 'memory_assets_audit'
+  | 'people_audit'
+  | 'asset_faces_audit'
   | 'stacks_audit';
 type UpsertTables =
   | 'users'
@@ -25,6 +27,8 @@ type UpsertTables =
   | 'albums_shared_users_users'
   | 'memories'
   | 'memories_assets_assets'
+  | 'person'
+  | 'asset_faces'
   | 'asset_stack';
 
 @Injectable()
@@ -36,12 +40,14 @@ export class SyncRepository {
   albumUser: AlbumUserSync;
   asset: AssetSync;
   assetExif: AssetExifSync;
+  face: FaceSync;
   memory: MemorySync;
   memoryToAsset: MemoryToAssetSync;
   partner: PartnerSync;
   partnerAsset: PartnerAssetsSync;
   partnerAssetExif: PartnerAssetExifsSync;
   partnerStack: PartnerStackSync;
+  person: PersonSync;
   stack: StackSync;
   user: UserSync;
 
@@ -53,12 +59,14 @@ export class SyncRepository {
     this.albumUser = new AlbumUserSync(this.db);
     this.asset = new AssetSync(this.db);
     this.assetExif = new AssetExifSync(this.db);
+    this.face = new FaceSync(this.db);
     this.memory = new MemorySync(this.db);
     this.memoryToAsset = new MemoryToAssetSync(this.db);
     this.partner = new PartnerSync(this.db);
     this.partnerAsset = new PartnerAssetsSync(this.db);
     this.partnerAssetExif = new PartnerAssetExifsSync(this.db);
     this.partnerStack = new PartnerStackSync(this.db);
+    this.person = new PersonSync(this.db);
     this.stack = new StackSync(this.db);
     this.user = new UserSync(this.db);
   }
@@ -370,6 +378,45 @@ class AssetExifSync extends BaseSync {
   }
 }
 
+class FaceSync extends BaseSync {
+  @GenerateSql({ params: [DummyValue.UUID], stream: true })
+  getDeletes(userId: string, ack?: SyncAck) {
+    return this.db
+      .selectFrom('asset_faces_audit')
+      .select(['id', 'faceId'])
+      .where('faceId', 'in', (eb) => eb.selectFrom('asset_faces').select('id').where(
+        'assetId', 'in', (eb) => eb.selectFrom('assets').select('id').where('ownerId', '=', userId)
+      ))
+      .$call((qb) => this.auditTableFilters(qb, ack))
+      .stream();
+  }
+
+  @GenerateSql({ params: [DummyValue.UUID], stream: true })
+  getUpserts(userId: string, ack?: SyncAck) {
+    return this.db
+      .selectFrom('asset_faces')
+      .select([
+        'id',
+        'personId',
+        'assetId',
+        'imageHeight',
+        'imageWidth',
+        'boundingBoxX1',
+        'boundingBoxY1',
+        'boundingBoxX2',
+        'boundingBoxY2',
+        'sourceType',
+        'createdAt',
+        'updatedAt',
+        'deletedAt',
+      ])
+      .select('updateId')
+      .where('assetId', 'in', (eb) => eb.selectFrom('assets').where('ownerId', '=', userId))
+      .$call((qb) => this.upsertTableFilters(qb, ack))
+      .stream();
+  }
+}
+
 class MemorySync extends BaseSync {
   @GenerateSql({ params: [DummyValue.UUID], stream: true })
   getDeletes(userId: string, ack?: SyncAck) {
@@ -534,6 +581,41 @@ class PartnerAssetExifsSync extends BaseSync {
             eb.selectFrom('partners').select(['sharedById']).where('sharedWithId', '=', userId),
           ),
       )
+      .$call((qb) => this.upsertTableFilters(qb, ack))
+      .stream();
+  }
+}
+
+class PersonSync extends BaseSync {
+  @GenerateSql({ params: [DummyValue.UUID], stream: true })
+  getDeletes(userId: string, ack?: SyncAck) {
+    return this.db
+      .selectFrom('people_audit')
+      .select(['id', 'personId'])
+      .where('userId', '=', userId)
+      .$call((qb) => this.auditTableFilters(qb, ack))
+      .stream();
+  }
+
+  @GenerateSql({ params: [DummyValue.UUID], stream: true })
+  getUpserts(userId: string, ack?: SyncAck) {
+    return this.db
+      .selectFrom('person')
+      .select([
+        'id',
+        'createdAt',
+        'updatedAt',
+        'ownerId',
+        'name',
+        'thumbnailPath',
+        'isHidden',
+        'birthDate',
+        'faceAssetId',
+        'isFavorite',
+        'color',
+      ])
+      .select('updateId')
+      .where('ownerId', '=', userId)
       .$call((qb) => this.upsertTableFilters(qb, ack))
       .stream();
   }

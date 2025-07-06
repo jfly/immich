@@ -259,6 +259,9 @@ export type Person = {
 
 export type AssetFace = {
   id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  updateId: string;
   deletedAt: Date | null;
   assetId: string;
   boundingBoxX1: number;
